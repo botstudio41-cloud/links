@@ -1,0 +1,337 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body><title>روابط Bot Studio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap">
+<style id="pagestyle">
+/* Layout: one narrow centered column, logo avatar on top, full-width link tiles below. Dark ink-violet first, light variant under prefers-color-scheme. */
+:root{
+  --bg:#120c2b; --surface:#1c1442; --surface-2:#271d5a; --line:#3b2f7d;
+  --fg:#f5f2ff; --muted:#bbb0e8; --accent:#8b5cf6; --accent-ink:#ffffff;
+  --glow:#4a28c9; --warn:#ffb86b; --ok:#8ef0b5;
+  --font:"Cairo","DejaVu Sans",system-ui,sans-serif;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f4f2fd; --surface:#ffffff; --surface-2:#ebe7fb; --line:#d6cff4;
+    --fg:#17102f; --muted:#5e5590; --accent:#5b34f0; --accent-ink:#ffffff;
+    --glow:#cdbfff; --warn:#a85a00; --ok:#17734a; color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#f4f2fd; --surface:#ffffff; --surface-2:#ebe7fb; --line:#d6cff4;
+  --fg:#17102f; --muted:#5e5590; --accent:#5b34f0; --accent-ink:#ffffff;
+  --glow:#cdbfff; --warn:#a85a00; --ok:#17734a; color-scheme:light;
+}
+html,body{min-height:100%}
+body{
+  background:radial-gradient(700px 420px at 85% -5%,var(--glow) 0%,transparent 65%),var(--bg);
+  background-color:var(--bg);color:var(--fg);font-family:var(--font);font-size:17px;line-height:1.6;
+  padding-block:32px 40px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.wrap{max-width:460px;margin:0 auto;display:flex;flex-direction:column;gap:28px;position:relative}
+.top{display:flex;justify-content:flex-start;min-height:40px}
+.avatar{display:block;margin:0 auto}
+.head{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+h1{font-size:30px;font-weight:700;line-height:1.3;margin:0;text-wrap:balance;overflow-wrap:anywhere}
+.bio{margin:0;color:var(--muted);font-size:17px;text-wrap:balance;overflow-wrap:anywhere}
+.list{display:flex;flex-direction:column;gap:14px}
+.link{
+  display:flex;align-items:center;gap:16px;min-height:68px;padding:12px 16px;
+  background:var(--surface);border:1.5px solid var(--line);border-radius:18px;color:var(--fg);text-decoration:none;
+  transition:transform .15s ease,border-color .15s ease,background .15s ease;min-width:0;
+}
+a.link:hover{transform:translateY(-2px);border-color:var(--accent);background:var(--surface-2)}
+a.link:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.mono{
+  flex:none;width:44px;height:44px;border-radius:12px;background:var(--accent);color:var(--accent-ink);
+  display:grid;place-items:center;font-family:"DejaVu Sans",system-ui,sans-serif;font-weight:700;font-size:17px;direction:ltr;
+}
+.lbl{flex:1;min-width:0;font-weight:600;font-size:19px;overflow-wrap:anywhere}
+.arrow{flex:none;color:var(--muted);font-size:22px}
+.link.empty{border-style:dashed;background:transparent;color:var(--muted)}
+.link.empty .mono{background:var(--surface-2);color:var(--muted)}
+.note{margin:0;text-align:center;color:var(--muted);font-size:16px}
+.hint{background:var(--surface);border:1.5px dashed var(--line);border-radius:16px;padding:14px 18px;color:var(--muted);font-size:16px;margin:0}
+.foot{margin:0;text-align:center;color:var(--muted);font-size:14px;letter-spacing:.02em}
+.btn{
+  font:inherit;font-weight:600;font-size:16px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);
+  border-radius:12px;padding:8px 18px;cursor:pointer;min-height:40px;
+}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn[disabled]{opacity:.6;cursor:default}
+.form{display:flex;flex-direction:column;gap:18px}
+.form h2{margin:0;font-size:22px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field>label{font-size:14px;color:var(--muted)}
+input[type=text]{
+  font:inherit;font-size:17px;width:100%;min-width:0;padding:10px 14px;border-radius:12px;
+  border:1.5px solid var(--line);background:var(--surface);color:var(--fg);
+}
+input::placeholder{color:var(--muted);opacity:.75}
+.rows{display:flex;flex-direction:column;gap:14px}
+.row{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.row.bad{border-color:var(--warn)}
+.row-tools{display:flex;gap:8px;align-items:center}
+.row-tools input{flex:1}
+.ibtn{flex:none;width:40px;height:40px;padding:0;display:grid;place-items:center;font-size:16px}
+.err{margin:0;color:var(--warn);font-size:14px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.status{margin:0;font-size:15px;color:var(--muted)}
+.status.bad{color:var(--warn)}
+@media (prefers-reduced-motion:reduce){.link{transition:none}a.link:hover{transform:none}}
+</style>
+<div id="app"></div>
+<script type="application/json" id="state">{"v":1,"name":"Bot Studi","bio":"اضغط «تعديل» وحط حساباتك ثم احفظ","links":[{"k":"x","label":"X (تويتر)","url":"https://x.com/BotStudi_11"},{"k":"tiktok","label":"تيك توك","url":"https://www.tiktok.com/@bot.studio8?_r=1&_t=ZS-9BP6zYtqddt"},{"k":"youtube","label":"يوتيوب","url":"https://www.youtube.com/@BotStudio-n9c"},{"k":"whatsapp","label":"قناة واتساب","url":"https://whatsapp.com/channel/0029Vb9NWTzFMqrU4o14To08"}]}</script>
+<script id="main">
+(function () {
+  var FONT = 'https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap';
+  var LOGO = '<svg class="avatar" viewBox="0 0 100 100" width="96" height="96" role="img" aria-label="Bot Studio"><rect width="100" height="100" rx="26" fill="#6d3df5"/><circle cx="50" cy="19" r="5" fill="#fff"/><rect x="47.5" y="22" width="5" height="12" fill="#fff"/><rect x="26" y="33" width="48" height="38" rx="12" fill="#fff"/><circle cx="40" cy="50" r="5.5" fill="#150f2e"/><circle cx="60" cy="50" r="5.5" fill="#150f2e"/><rect x="42" y="60" width="16" height="3.5" rx="1.7" fill="#8b5cf6"/></svg>';
+  var MONO = { x: 'X', tiktok: 'TT', youtube: 'YT', whatsapp: 'WA', facebook: 'f' };
+  var HINT = { x: '@username أو الرابط', tiktok: '@username أو الرابط', youtube: '@channel أو الرابط', facebook: 'اسم الصفحة أو الرابط', whatsapp: 'رابط القناة الكامل (whatsapp.com/channel/…)' };
+  var app = document.getElementById('app');
+  app.setAttribute('dir', 'rtl');
+  app.setAttribute('lang', 'ar');
+
+  var state;
+  try { state = JSON.parse(document.getElementById('state').textContent); }
+  catch (e) { state = { v: 1, name: '', bio: '', links: [] }; }
+  var canEdit = false, editing = false, draft = null, status = '', statusBad = false, saving = false;
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function safeUrl(u) {
+    try {
+      var x = new URL(u);
+      return (x.protocol === 'https:' || x.protocol === 'http:') ? x.href : '';
+    } catch (e) { return ''; }
+  }
+  function norm(kind, raw) {
+    var v = (raw || '').trim();
+    if (!v) return '';
+    if (/^https?:\/\//i.test(v)) return safeUrl(v);
+    if (/^[\w.-]+\.[a-z]{2,}\//i.test(v)) return safeUrl('https://' + v);
+    var u = v.replace(/^@/, '');
+    if (!/^[\w.\-]+$/.test(u)) return '';
+    if (kind === 'x') return 'https://x.com/' + u;
+    if (kind === 'tiktok') return 'https://www.tiktok.com/@' + u;
+    if (kind === 'youtube') return 'https://www.youtube.com/@' + u;
+    if (kind === 'facebook') return 'https://www.facebook.com/' + u;
+    return '';
+  }
+  function monoFor(l) {
+    if (MONO[l.k]) return MONO[l.k];
+    var c = (l.label || '').trim().charAt(0);
+    return c || '↗';
+  }
+
+  function renderView() {
+    app.textContent = '';
+    var wrap = el('main', 'wrap');
+    var top = el('div', 'top');
+    if (canEdit) {
+      var eb = el('button', 'btn', 'تعديل');
+      eb.type = 'button';
+      eb.id = 'edit-btn';
+      eb.addEventListener('click', startEdit);
+      top.appendChild(eb);
+    }
+    wrap.appendChild(top);
+
+    var head = el('header', 'head');
+    var logo = el('div');
+    logo.innerHTML = LOGO;
+    head.appendChild(logo);
+    head.appendChild(el('h1', null, state.name || 'Bot Studio'));
+    if (state.bio) head.appendChild(el('p', 'bio', state.bio));
+    wrap.appendChild(head);
+
+    var list = el('nav', 'list');
+    var shown = 0, filled = 0;
+    state.links.forEach(function (l) {
+      var href = safeUrl(l.url);
+      if (href) {
+        filled++; shown++;
+        var a = el('a', 'link');
+        a.href = href;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.appendChild(el('span', 'mono', monoFor(l)));
+        a.appendChild(el('span', 'lbl', l.label));
+        a.appendChild(el('span', 'arrow', '←'));
+        list.appendChild(a);
+      } else if (canEdit) {
+        shown++;
+        var d = el('div', 'link empty');
+        d.appendChild(el('span', 'mono', monoFor(l)));
+        d.appendChild(el('span', 'lbl', l.label + ' (فاضي)'));
+        list.appendChild(d);
+      }
+    });
+    if (shown) wrap.appendChild(list);
+    if (canEdit && !filled) wrap.appendChild(el('p', 'hint', 'الزوار ما يشوفون الأزرار الفاضية. اضغط «تعديل» وحط روابط حساباتك ثم احفظ.'));
+    if (!canEdit && !filled) wrap.appendChild(el('p', 'note', 'الصفحة قيد الإعداد، ارجع بعد قليل.'));
+    wrap.appendChild(el('p', 'foot', 'Bot Studio · مستقبل الأتمتة يبدأ من هنا'));
+    app.appendChild(wrap);
+  }
+
+  function startEdit() {
+    draft = {
+      name: state.name || '',
+      bio: state.bio || '',
+      links: state.links.map(function (l) { return { k: l.k, label: l.label, raw: l.url || '', bad: false }; })
+    };
+    editing = true; status = ''; statusBad = false;
+    renderEdit();
+  }
+
+  function renderEdit() {
+    app.textContent = '';
+    var wrap = el('main', 'wrap');
+    var form = el('form', 'form');
+    form.addEventListener('submit', function (ev) { ev.preventDefault(); save(); });
+    form.appendChild(el('h2', null, 'تعديل الصفحة'));
+
+    function field(id, label, value, max, onInput) {
+      var f = el('div', 'field');
+      var lb = el('label', null, label); lb.setAttribute('for', id);
+      var inp = el('input'); inp.type = 'text'; inp.id = id; inp.value = value; inp.maxLength = max;
+      inp.addEventListener('input', function () { onInput(inp.value); });
+      f.appendChild(lb); f.appendChild(inp);
+      return f;
+    }
+    form.appendChild(field('f-name', 'الاسم', draft.name, 40, function (v) { draft.name = v; }));
+    form.appendChild(field('f-bio', 'نبذة قصيرة', draft.bio, 120, function (v) { draft.bio = v; }));
+
+    var rows = el('div', 'rows');
+    draft.links.forEach(function (l, i) {
+      var row = el('div', 'row' + (l.bad ? ' bad' : ''));
+      var t1 = el('div', 'row-tools');
+      var li = el('input'); li.type = 'text'; li.id = 'l-' + i; li.value = l.label; li.maxLength = 30;
+      li.setAttribute('aria-label', 'اسم الزر');
+      li.addEventListener('input', function () { l.label = li.value; });
+      var up = el('button', 'btn ibtn', '▲'); up.type = 'button'; up.setAttribute('aria-label', 'فوق');
+      up.disabled = i === 0;
+      up.addEventListener('click', function () { move(i, -1); });
+      var dn = el('button', 'btn ibtn', '▼'); dn.type = 'button'; dn.setAttribute('aria-label', 'تحت');
+      dn.disabled = i === draft.links.length - 1;
+      dn.addEventListener('click', function () { move(i, 1); });
+      var rm = el('button', 'btn ibtn', '✕'); rm.type = 'button'; rm.setAttribute('aria-label', 'حذف');
+      rm.addEventListener('click', function () { draft.links.splice(i, 1); renderEdit(); });
+      t1.appendChild(li); t1.appendChild(up); t1.appendChild(dn); t1.appendChild(rm);
+      var ui = el('input'); ui.type = 'text'; ui.id = 'u-' + i; ui.value = l.raw; ui.dir = 'ltr';
+      ui.placeholder = HINT[l.k] || 'الرابط الكامل https://…';
+      ui.setAttribute('aria-label', 'الرابط');
+      ui.addEventListener('input', function () { l.raw = ui.value; });
+      row.appendChild(t1); row.appendChild(ui);
+      if (l.bad) row.appendChild(el('p', 'err', 'ما قدرت أفهم هذا الرابط. اكتب الرابط كاملًا يبدأ بـ https://'));
+      rows.appendChild(row);
+    });
+    form.appendChild(rows);
+
+    var add = el('button', 'btn', '+ إضافة رابط'); add.type = 'button'; add.id = 'add-btn';
+    add.addEventListener('click', function () {
+      if (draft.links.length >= 12) return;
+      draft.links.push({ k: 'custom', label: '', raw: '', bad: false });
+      renderEdit();
+      var last = document.getElementById('l-' + (draft.links.length - 1));
+      if (last) last.focus();
+    });
+    form.appendChild(add);
+
+    var actions = el('div', 'actions');
+    var sv = el('button', 'btn primary', saving ? 'جارٍ الحفظ…' : 'حفظ'); sv.type = 'submit'; sv.id = 'save-btn'; sv.disabled = saving;
+    var cn = el('button', 'btn', 'إلغاء'); cn.type = 'button'; cn.disabled = saving;
+    cn.addEventListener('click', function () { editing = false; renderView(); });
+    actions.appendChild(sv); actions.appendChild(cn);
+    form.appendChild(actions);
+    if (status) form.appendChild(el('p', 'status' + (statusBad ? ' bad' : ''), status));
+    wrap.appendChild(form);
+    app.appendChild(wrap);
+  }
+
+  function move(i, d) {
+    var j = i + d;
+    if (j < 0 || j >= draft.links.length) return;
+    var t = draft.links[i]; draft.links[i] = draft.links[j]; draft.links[j] = t;
+    renderEdit();
+  }
+
+  function buildDoc(s) {
+    var heads = document.head ? document.head.querySelectorAll('style') : [];
+    var reset = '';
+    for (var i = 0; i < heads.length; i++) {
+      if (heads[i].textContent.indexOf('safe-area-inset') !== -1) { reset = heads[i].textContent; break; }
+    }
+    var json = JSON.stringify(s).replace(/</g, '\\u003c');
+    var title = document.querySelector('title');
+    var css = document.getElementById('pagestyle').textContent;
+    var js = document.getElementById('main').textContent;
+    var CLOSE = '<' + '/script>';
+    return '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>' + reset + '</style></head><body>' +
+      '<title>' + (title ? title.textContent : 'روابط Bot Studio') + '</title>\n' +
+      '<meta name="claude:viewport-fit-sides" content="cover">\n' +
+      '<link rel="stylesheet" href="' + FONT + '">\n' +
+      '<style id="pagestyle">' + css + '</style>\n' +
+      '<div id="app"></div>\n' +
+      '<script type="application/json" id="state">' + json + CLOSE + '\n' +
+      '<script id="main">' + js + CLOSE +
+      '</body></html>';
+  }
+
+  async function save() {
+    var out = [], bad = false;
+    draft.links.forEach(function (l) {
+      var raw = (l.raw || '').trim();
+      var url = norm(l.k, raw);
+      l.bad = !!raw && !url;
+      if (l.bad) bad = true;
+      var label = (l.label || '').trim();
+      if (l.k === 'custom') {
+        if (!url) return;
+        out.push({ k: 'custom', label: label || url.replace(/^https?:\/\/(www\.)?/, '').split('/')[0], url: url });
+      } else {
+        out.push({ k: l.k, label: label || l.k, url: url });
+      }
+    });
+    if (bad) { status = 'صحّح الروابط المعلّمة ثم احفظ.'; statusBad = true; renderEdit(); return; }
+    var next = { v: 1, name: (draft.name || '').trim(), bio: (draft.bio || '').trim(), links: out };
+    saving = true; status = 'جارٍ الحفظ…'; statusBad = false; renderEdit();
+    try {
+      var artifact = await claude.use('artifact');
+      if (!artifact) throw { code: 'not_granted' };
+      await artifact.publish(buildDoc(next));
+      status = 'تم الحفظ.';
+    } catch (e) {
+      saving = false;
+      var code = e && e.code;
+      if (code === 'conflict') { return; }
+      statusBad = true;
+      status = (code === 'not_writer' || code === 'not_granted' || code === 'not_declared')
+        ? 'هذا العرض للقراءة فقط، افتح الصفحة بحسابك عشان تعدّل.'
+        : (code === 'rate_limited' ? 'حاولت كثير، انتظر شوي وجرّب.' : 'ما انحفظت التعديلات، جرّب مرة ثانية.');
+      renderEdit();
+    }
+  }
+
+  renderView();
+
+  (async function () {
+    try {
+      if (!window.claude || !claude.use) return;
+      var results = await Promise.all([claude.use('artifact'), claude.use('user')]);
+      var artifact = results[0], user = results[1];
+      if (artifact && user && (await user.canEdit())) {
+        canEdit = true;
+        if (!editing) renderView();
+      }
+    } catch (e) { /* read-only view */ }
+  })();
+})();
+</script></body></html>
